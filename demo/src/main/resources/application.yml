@@ -1,0 +1,9 @@
+server:
+  port: 8080
+
+system:
+  limit:
+    url: /test,/limit
+    debug: false
+    maxRequest: 10
+    message: "{code:000,message:\"系统忙，请稍后重试...\"}"
