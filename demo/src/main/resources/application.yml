@@ -4,6 +4,5 @@ server:
 system:
   limit:
     url: /test,/limit
-    switch: true
     maxRequest: 10
     message: "{code:000,message:\"系统忙，请稍后重试...\"}"

@@ -21,6 +21,7 @@ public class LimitFilter implements Filter {
         try {
             Integer maxRequest = Integer.parseInt(AutoLoadUtil.getYamlValue("system.limit.maxRequest"));
             System.out.println("doFilter :maxRequest:>>" + maxRequest);
+            System.out.println("doFilter :currentRequest:>>"+ counter.get());
             if (counter.incrementAndGet() > maxRequest) {
                 HttpServletResponse resp = (HttpServletResponse) response;
                 resp.setCharacterEncoding("UTF-8");
@@ -32,8 +33,8 @@ public class LimitFilter implements Filter {
             }
             filterChain.doFilter(request, response);
         } finally {
-//            counter.decrementAndGet();
-            System.out.println("doFilter:currentRequest:>>" + counter.decrementAndGet());
+            counter.decrementAndGet();
+            System.out.println("doFilter:currentRequest:>>" + counter.get());
         }
 
         System.out.println("after doFilter....");
