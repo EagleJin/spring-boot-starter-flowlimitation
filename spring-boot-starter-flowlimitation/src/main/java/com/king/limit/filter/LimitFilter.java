@@ -6,26 +6,22 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class LimitFilter implements Filter {
-    private static int currentRequest;
+    private static AtomicInteger counter = new AtomicInteger(0);
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        currentRequest = 0;
-        System.out.println("currentRequest:>>"+currentRequest);
-        // 获取配置文件中配置的最大允许的请求量
-        System.out.println("init:maxRequest:>>"+Integer.parseInt(AutoLoadUtil.getYamlValue("system.limit.maxRequest")));
+        // ....
     }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
-        if ("false".equals(AutoLoadUtil.getYamlValue("system.limit.debug"))) {
-            ++ currentRequest;
-            System.out.println("doFilter:currentRequest:>>"+currentRequest);
+        try {
             Integer maxRequest = Integer.parseInt(AutoLoadUtil.getYamlValue("system.limit.maxRequest"));
-            System.out.println("doFilter :maxRequest:>>"+maxRequest);
-            if (currentRequest > maxRequest) {
+            System.out.println("doFilter :maxRequest:>>" + maxRequest);
+            if (counter.incrementAndGet() > maxRequest) {
                 HttpServletResponse resp = (HttpServletResponse) response;
                 resp.setCharacterEncoding("UTF-8");
                 resp.setContentType("text/html;charset=UTF-8");
@@ -34,16 +30,17 @@ public class LimitFilter implements Filter {
                 System.out.println(AutoLoadUtil.getYamlValue("system.limit.message"));
                 return;
             }
+            filterChain.doFilter(request, response);
+        } finally {
+//            counter.decrementAndGet();
+            System.out.println("doFilter:currentRequest:>>" + counter.decrementAndGet());
         }
 
-        filterChain.doFilter(request, response);
-        currentRequest --;
-        System.out.println("doFilter:currentRequest--:>>"+currentRequest);
         System.out.println("after doFilter....");
     }
 
     @Override
     public void destroy() {
-        System.out.println("destory().....");
+        // .....
     }
 }

@@ -5,7 +5,7 @@
 
 	<groupId>com.king</groupId>
 	<artifactId>spring-boot-starter-flowlimitation</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<packaging>jar</packaging>
 
 	<name>spring-boot-starter-flowlimitation</name>

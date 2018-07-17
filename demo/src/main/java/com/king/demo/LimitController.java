@@ -14,7 +14,7 @@ public class LimitController {
         System.out.println("limit start...");
         System.out.println("limit do something...");
         try {
-            Thread.sleep(1000 * 2);
+            Thread.sleep(1000 * 5);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

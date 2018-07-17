@@ -4,6 +4,6 @@ server:
 system:
   limit:
     url: /test,/limit
-    debug: false
+    switch: true
     maxRequest: 10
-    message: "{code:000,message:\"ÏµÍ³Ã¦£¬ÇëÉÔºóÖØÊÔ...\"}"
+    message: "{code:000,message:\"ç³»ç»Ÿå¿™ï¼Œè¯·ç¨åé‡è¯•...\"}"
